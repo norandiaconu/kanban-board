@@ -2,4 +2,7 @@
     <mat-icon>local_fire_department</mat-icon>
     <span>Kanban Fire</span>
 </mat-toolbar>
+@for (task of todo; track task) {
+    <app-task [task]="task"></app-task>
+}
 <router-outlet></router-outlet>
