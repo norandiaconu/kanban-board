@@ -8,8 +8,9 @@ import {
     MatDialogRef
 } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
+import { MatButtonModule, MatFabButton } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 
 export interface TaskDialogData {
     task: Partial<Task>;
@@ -30,20 +31,22 @@ export interface TaskDialogResult {
         MatButtonModule,
         MatDialogActions,
         MatLabel,
-        MatInputModule
+        MatInputModule,
+        MatIconModule,
+        MatFabButton
     ],
     templateUrl: './task-dialog.component.html',
     styleUrl: './task-dialog.component.scss'
 })
 export class TaskDialogComponent {
     protected data = inject<TaskDialogData>(MAT_DIALOG_DATA);
-    private dialogRef = inject(MatDialogRef<TaskDialogComponent>);
+    private dialogRef = inject<MatDialogRef<TaskDialogComponent>>(MatDialogRef);
 
     private backupTask: Partial<Task> = { ...this.data.task };
 
     protected cancel(): void {
         this.data.task.title = this.backupTask.title;
         this.data.task.description = this.backupTask.description;
-        this.dialogRef.close(this.data);
+        this.dialogRef.close();
     }
 }

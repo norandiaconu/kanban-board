@@ -1,6 +1,13 @@
 .form {
     padding: 30px;
-    width: 200px;
+    width: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input {
+    width: 260px;
 }
 
 .actions {
