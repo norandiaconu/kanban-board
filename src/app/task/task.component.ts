@@ -14,7 +14,10 @@ export interface Task {
     styleUrl: './task.component.scss'
 })
 export class TaskComponent {
-    public readonly task = input<Task | null>(null);
+    public readonly task = input<Task>({
+        title: '',
+        description: ''
+    });
     protected readonly edit = output<Task>();
 
     protected doubleClick(): void {
