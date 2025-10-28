@@ -1,12 +1,15 @@
 import {
     ApplicationConfig,
     provideBrowserGlobalErrorListeners,
-    provideZoneChangeDetection
+    provideZoneChangeDetection,
+    isDevMode
 } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { appRoutes } from './app.routes';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { provideServiceWorker } from '@angular/service-worker';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -23,6 +26,11 @@ export const appConfig: ApplicationConfig = {
                 messagingSenderId: '785631141865'
             })
         ),
-        provideAuth(() => getAuth())
+        provideFirestore(() => getFirestore()),
+        provideAuth(() => getAuth()),
+        provideServiceWorker('ngsw-worker.js', {
+            enabled: !isDevMode(),
+            registrationStrategy: 'registerWhenStable:30000'
+        })
     ]
 };
