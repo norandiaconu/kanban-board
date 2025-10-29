@@ -1,0 +1,19 @@
+<div class="login">
+    <div class="user-pass">
+        <span class="user-pass">Username</span>
+        <input class="input" [(ngModel)]="username" />
+        <br />
+        <span class="user-pass">Password</span>
+        <input class="input" [(ngModel)]="password" />
+    </div>
+    <button class="button" (click)="login()">Login</button>
+
+    <div class="user-pass">
+        @if (!loggedIn) {
+            <mat-icon>cancel</mat-icon>
+        }
+        @if (loggedIn) {
+            <mat-icon>check_circle</mat-icon>
+        }
+    </div>
+</div>

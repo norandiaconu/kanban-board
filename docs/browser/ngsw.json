@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1761669898999,
+  "timestamp": 1761774242827,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/favicon.ico",
         "/index.html",
-        "/main-FTR4KIIM.js",
+        "/main-KOC4APDI.js",
         "/manifest.webmanifest",
         "/polyfills-5CFQRCPP.js",
         "/styles-PRPNPSJX.css"
@@ -37,8 +37,8 @@
   "hashTable": {
     "/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
     "/icons/icon-512x512.png": "1de182f76f7329dfa8f9fcdd1fdcdd695bea6a99",
-    "/index.html": "945bd40dc4f03d6b6bcad5af0e5902a053b519c8",
-    "/main-FTR4KIIM.js": "49675d256f41e2a4aa3beb976226296ae905a9cc",
+    "/index.html": "9de3eccf429cf04b7497982017c32212af9fabc9",
+    "/main-KOC4APDI.js": "bdb52d84aff8fbccd0a947012c294b48e73886af",
     "/manifest.webmanifest": "f6a23de436021d038237391a07a90e97f503d306",
     "/polyfills-5CFQRCPP.js": "f2241e9a25858f895ce299d15f6f22e849e2fd72",
     "/styles-PRPNPSJX.css": "d870c813af8831b93f8458dbc8925bb788ca8a15"

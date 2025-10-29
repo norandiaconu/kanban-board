@@ -6,6 +6,11 @@ mat-toolbar > span {
     margin-left: 10px;
 }
 
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+}
+
 .content-wrapper {
     max-width: 1400px;
     margin: auto;

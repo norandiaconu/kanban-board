@@ -15,8 +15,7 @@ import {
     TaskDialogComponent,
     TaskDialogResult
 } from './task-dialog/task-dialog.component';
-import { collectionData, Firestore } from '@angular/fire/firestore';
-import { collection } from '@firebase/firestore';
+import { LoginComponent } from './login/login.component';
 
 @Component({
     imports: [
@@ -26,7 +25,8 @@ import { collection } from '@firebase/firestore';
         TaskComponent,
         MatCardModule,
         DragDropModule,
-        MatButtonModule
+        MatButtonModule,
+        LoginComponent
     ],
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -34,7 +34,6 @@ import { collection } from '@firebase/firestore';
 })
 export class AppComponent {
     private readonly dialog = inject(MatDialog);
-    private readonly firestore = inject(Firestore);
 
     protected title = 'kanban-board';
     protected todo: Task[] = [
@@ -49,14 +48,6 @@ export class AppComponent {
     ];
     protected inProgress: Task[] = [];
     protected done: Task[] = [];
-    private itemCollection;
-    private items$;
-
-    constructor() {
-        this.itemCollection = collection(this.firestore, 'items');
-        this.items$ = collectionData(this.itemCollection);
-        console.log('items', this.items$);
-    }
 
     protected editTask(list: 'done' | 'todo' | 'inProgress', task: Task): void {
         const dialogRef = this.dialog.open(TaskDialogComponent, {
