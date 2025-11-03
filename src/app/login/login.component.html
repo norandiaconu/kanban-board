@@ -1,5 +1,5 @@
 <div class="login">
-    <div class="user-pass">
+    <div>
         <span class="user-pass">Username</span>
         <input class="input" [(ngModel)]="username" />
         <br />
@@ -8,12 +8,10 @@
     </div>
     <button class="button" (click)="login()">Login</button>
 
-    <div class="user-pass">
-        @if (!loggedIn) {
-            <mat-icon>cancel</mat-icon>
-        }
-        @if (loggedIn) {
-            <mat-icon>check_circle</mat-icon>
-        }
-    </div>
+    @if (!loggedIn) {
+        <mat-icon>cancel</mat-icon>
+    }
+    @if (loggedIn) {
+        <mat-icon>check_circle</mat-icon>
+    }
 </div>

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, output } from '@angular/core';
 import { getAuth, signInWithEmailAndPassword } from '@angular/fire/auth';
 import {
     collection,
@@ -17,6 +17,7 @@ import { MatIcon } from '@angular/material/icon';
 })
 export class LoginComponent {
     private readonly firestore = inject(Firestore);
+    public readonly loggedInOutput = output<boolean>();
 
     protected username = '';
     protected password = '';
@@ -32,6 +33,7 @@ export class LoginComponent {
             const collData = collectionData(queryRes);
             collData.subscribe((data) => {
                 this.loggedIn = true;
+                this.loggedInOutput.emit(true);
                 console.log('data', data);
             });
         });

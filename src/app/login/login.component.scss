@@ -5,13 +5,22 @@
 
 .user-pass {
     padding-right: 1rem;
+    display: inline-block;
+    width: 6rem;
 }
 
 .input {
     width: 10rem;
+    border-radius: 4px;
 }
 
 .button {
-    margin-right: 1rem;
+    margin: 1rem;
     height: 3rem;
+    border: 2px solid grey;
+    border-radius: 4px;
+}
+
+mat-icon {
+    margin-right: 1rem;
 }

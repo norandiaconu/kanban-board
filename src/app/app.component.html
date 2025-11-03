@@ -3,7 +3,7 @@
         <mat-icon>local_fire_department</mat-icon>
         <span>Kanban Fire</span>
     </span>
-    <app-login></app-login>
+    <app-login (loggedInOutput)="login($event)"></app-login>
 </mat-toolbar>
 <div class="content-wrapper">
     <button (click)="newTask()" mat-button>

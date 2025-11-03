@@ -16,6 +16,17 @@ import {
     TaskDialogResult
 } from './task-dialog/task-dialog.component';
 import { LoginComponent } from './login/login.component';
+import {
+    addDoc,
+    collection,
+    collectionData,
+    deleteDoc,
+    doc,
+    Firestore,
+    query,
+    where
+} from '@angular/fire/firestore';
+import { Observable, take } from 'rxjs';
 
 @Component({
     imports: [
@@ -34,6 +45,7 @@ import { LoginComponent } from './login/login.component';
 })
 export class AppComponent {
     private readonly dialog = inject(MatDialog);
+    private readonly firestore = inject(Firestore);
 
     protected title = 'kanban-board';
     protected todo: Task[] = [
@@ -46,8 +58,12 @@ export class AppComponent {
             description: 'Using Firebase and Angular create a Kanban app!'
         }
     ];
+    protected todoObs: Observable<Task[]> = new Observable();
     protected inProgress: Task[] = [];
+    protected inProgressObs: Observable<Task[]> = new Observable();
     protected done: Task[] = [];
+    protected doneObs: Observable<Task[]> = new Observable();
+    protected loggedIn = false;
 
     protected editTask(list: 'done' | 'todo' | 'inProgress', task: Task): void {
         const dialogRef = this.dialog.open(TaskDialogComponent, {
@@ -80,6 +96,36 @@ export class AppComponent {
         if (!event.container.data || !event.previousContainer.data) {
             return;
         }
+        if (this.loggedIn) {
+            collectionData(
+                query(
+                    collection(this.firestore, event.previousContainer.id),
+                    where(
+                        'title',
+                        '==',
+                        event.previousContainer.data[event.previousIndex].title
+                    )
+                ),
+                { idField: 'id' }
+            )
+                .pipe(take(1))
+                .subscribe(async (item) => {
+                    if (!item) {
+                        return;
+                    }
+                    await addDoc(
+                        collection(this.firestore, event.container.id),
+                        item[0]
+                    );
+                    await deleteDoc(
+                        doc(
+                            this.firestore,
+                            event.previousContainer.id,
+                            item[0].id
+                        )
+                    );
+                });
+        }
         transferArrayItem(
             event.previousContainer.data,
             event.container.data,
@@ -97,11 +143,39 @@ export class AppComponent {
         });
         dialogRef
             .afterClosed()
-            .subscribe((result: TaskDialogResult | undefined) => {
+            .subscribe(async (result: TaskDialogResult | undefined) => {
                 if (!result) {
                     return;
                 }
-                this.todo.push(result.task);
+                if (this.loggedIn) {
+                    await addDoc(
+                        collection(this.firestore, 'todo'),
+                        result.task
+                    );
+                } else {
+                    this.todo.push(result.task);
+                }
             });
+    }
+
+    protected login(loggedIn: boolean): void {
+        if (!loggedIn) {
+            return;
+        }
+        this.loggedIn = true;
+        this.todoObs = collectionData(
+            query(collection(this.firestore, 'todo'))
+        ) as Observable<Task[]>;
+        this.todoObs.subscribe((todos) => (this.todo = todos));
+        this.inProgressObs = collectionData(
+            query(collection(this.firestore, 'inProgress'))
+        ) as Observable<Task[]>;
+        this.inProgressObs.subscribe(
+            (inProgresses) => (this.inProgress = inProgresses)
+        );
+        this.doneObs = collectionData(
+            query(collection(this.firestore, 'done'))
+        ) as Observable<Task[]>;
+        this.doneObs.subscribe((dones) => (this.done = dones));
     }
 }
