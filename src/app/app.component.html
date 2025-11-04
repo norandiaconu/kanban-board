@@ -25,7 +25,7 @@
                 @if (todo.length === 0) {
                     <p class="empty-label">Empty list</p>
                 }
-                @for (task of todo; track task) {
+                @for (task of todo; track task.title) {
                     <app-task
                         [task]="task"
                         (edit)="editTask('todo', $event)"
@@ -50,7 +50,7 @@
                 @if (inProgress.length === 0) {
                     <p class="empty-label">Empty list</p>
                 }
-                @for (task of inProgress; track task) {
+                @for (task of inProgress; track task.title) {
                     <app-task
                         (edit)="editTask('inProgress', $event)"
                         cdkDrag
@@ -75,7 +75,7 @@
                 @if (done.length === 0) {
                     <p class="empty-label">Empty list</p>
                 }
-                @for (task of done; track task) {
+                @for (task of done; track task.title) {
                     <app-task
                         (edit)="editTask('done', $event)"
                         cdkDrag

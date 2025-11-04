@@ -1,4 +1,9 @@
-import { Component, inject } from '@angular/core';
+import {
+    Component,
+    inject,
+    Injector,
+    runInInjectionContext
+} from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -24,6 +29,7 @@ import {
     doc,
     Firestore,
     query,
+    updateDoc,
     where
 } from '@angular/fire/firestore';
 import { Observable, take } from 'rxjs';
@@ -46,6 +52,7 @@ import { Observable, take } from 'rxjs';
 export class AppComponent {
     private readonly dialog = inject(MatDialog);
     private readonly firestore = inject(Firestore);
+    private readonly injector = inject(Injector);
 
     protected title = 'kanban-board';
     protected todo: Task[] = [
@@ -66,6 +73,7 @@ export class AppComponent {
     protected loggedIn = false;
 
     protected editTask(list: 'done' | 'todo' | 'inProgress', task: Task): void {
+        const title = task.title;
         const dialogRef = this.dialog.open(TaskDialogComponent, {
             width: '320px',
             data: {
@@ -81,10 +89,52 @@ export class AppComponent {
                 }
                 const dataList = this[list];
                 const taskIndex = dataList.indexOf(task);
-                if (result.delete) {
-                    dataList.splice(taskIndex, 1);
+                if (this.loggedIn) {
+                    runInInjectionContext(this.injector, () => {
+                        collectionData(
+                            query(
+                                collection(this.firestore, list),
+                                where('title', '==', title)
+                            ),
+                            { idField: 'id' }
+                        )
+                            .pipe(take(1))
+                            .subscribe((item) => {
+                                runInInjectionContext(
+                                    this.injector,
+                                    async () => {
+                                        if (result.delete) {
+                                            await deleteDoc(
+                                                doc(
+                                                    this.firestore,
+                                                    list,
+                                                    item[0].id
+                                                )
+                                            );
+                                        } else {
+                                            await updateDoc(
+                                                doc(
+                                                    this.firestore,
+                                                    list,
+                                                    item[0].id
+                                                ),
+                                                {
+                                                    title: task.title,
+                                                    description:
+                                                        task.description
+                                                }
+                                            );
+                                        }
+                                    }
+                                );
+                            });
+                    });
                 } else {
-                    dataList[taskIndex] = task;
+                    if (result.delete) {
+                        dataList.splice(taskIndex, 1);
+                    } else {
+                        dataList[taskIndex] = task;
+                    }
                 }
             });
     }
@@ -97,34 +147,41 @@ export class AppComponent {
             return;
         }
         if (this.loggedIn) {
-            collectionData(
-                query(
-                    collection(this.firestore, event.previousContainer.id),
-                    where(
-                        'title',
-                        '==',
-                        event.previousContainer.data[event.previousIndex].title
-                    )
-                ),
-                { idField: 'id' }
-            )
-                .pipe(take(1))
-                .subscribe(async (item) => {
-                    if (!item) {
-                        return;
-                    }
-                    await addDoc(
-                        collection(this.firestore, event.container.id),
-                        item[0]
-                    );
-                    await deleteDoc(
-                        doc(
-                            this.firestore,
-                            event.previousContainer.id,
-                            item[0].id
+            runInInjectionContext(this.injector, () => {
+                collectionData(
+                    query(
+                        collection(this.firestore, event.previousContainer.id),
+                        where(
+                            'title',
+                            '==',
+                            event.previousContainer.data[event.previousIndex]
+                                .title
                         )
-                    );
-                });
+                    ),
+                    { idField: 'id' }
+                )
+                    .pipe(take(1))
+                    .subscribe((item) => {
+                        if (!item) {
+                            return;
+                        }
+                        runInInjectionContext(this.injector, async () => {
+                            await addDoc(
+                                collection(this.firestore, event.container.id),
+                                item[0]
+                            );
+                        });
+                        runInInjectionContext(this.injector, async () => {
+                            await deleteDoc(
+                                doc(
+                                    this.firestore,
+                                    event.previousContainer.id,
+                                    item[0].id
+                                )
+                            );
+                        });
+                    });
+            });
         }
         transferArrayItem(
             event.previousContainer.data,
@@ -143,15 +200,17 @@ export class AppComponent {
         });
         dialogRef
             .afterClosed()
-            .subscribe(async (result: TaskDialogResult | undefined) => {
+            .subscribe((result: TaskDialogResult | undefined) => {
                 if (!result) {
                     return;
                 }
                 if (this.loggedIn) {
-                    await addDoc(
-                        collection(this.firestore, 'todo'),
-                        result.task
-                    );
+                    runInInjectionContext(this.injector, async () => {
+                        await addDoc(
+                            collection(this.firestore, 'todo'),
+                            result.task
+                        );
+                    });
                 } else {
                     this.todo.push(result.task);
                 }
@@ -163,19 +222,21 @@ export class AppComponent {
             return;
         }
         this.loggedIn = true;
-        this.todoObs = collectionData(
-            query(collection(this.firestore, 'todo'))
-        ) as Observable<Task[]>;
-        this.todoObs.subscribe((todos) => (this.todo = todos));
-        this.inProgressObs = collectionData(
-            query(collection(this.firestore, 'inProgress'))
-        ) as Observable<Task[]>;
-        this.inProgressObs.subscribe(
-            (inProgresses) => (this.inProgress = inProgresses)
-        );
-        this.doneObs = collectionData(
-            query(collection(this.firestore, 'done'))
-        ) as Observable<Task[]>;
-        this.doneObs.subscribe((dones) => (this.done = dones));
+        runInInjectionContext(this.injector, () => {
+            this.todoObs = collectionData(
+                query(collection(this.firestore, 'todo'))
+            ) as Observable<Task[]>;
+            this.todoObs.subscribe((todos) => (this.todo = todos));
+            this.inProgressObs = collectionData(
+                query(collection(this.firestore, 'inProgress'))
+            ) as Observable<Task[]>;
+            this.inProgressObs.subscribe(
+                (inProgresses) => (this.inProgress = inProgresses)
+            );
+            this.doneObs = collectionData(
+                query(collection(this.firestore, 'done'))
+            ) as Observable<Task[]>;
+            this.doneObs.subscribe((dones) => (this.done = dones));
+        });
     }
 }

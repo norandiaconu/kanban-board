@@ -1,16 +1,16 @@
 {
     "name": "kanban-board",
-    "version": "0.9.0",
+    "version": "1.0.0",
     "license": "MIT",
     "scripts": {
         "start": "ng serve",
         "build": "ng build",
         "test": "ng test",
-        "e2e": "playwright test"
+        "e2e": "playwright test",
+        "preview": "ng build && vite preview --port 8080 --outDir ./docs/browser --open"
     },
     "private": true,
     "dependencies": {
-        "@angular/cdk": "^20.2.10",
         "@angular/common": "^20.3.7",
         "@angular/compiler": "^20.3.7",
         "@angular/core": "^20.3.7",
@@ -22,11 +22,11 @@
         "@angular/router": "^20.3.7",
         "@angular/service-worker": "^20.3.7",
         "rxjs": "~7.8.0",
-        "tslib": "^2.3.0",
         "zone.js": "~0.15.0"
     },
     "devDependencies": {
         "@angular/build": "^20.3.7",
+        "@angular/cdk": "^20.2.10",
         "@angular/cli": "^20.3.7",
         "@angular/compiler-cli": "^20.3.7",
         "@playwright/test": "^1.56.1",
