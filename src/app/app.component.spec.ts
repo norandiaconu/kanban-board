@@ -1,9 +1,12 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 
 describe('AppComponent', () => {
+    let component: AppComponent;
+    let fixture: ComponentFixture<AppComponent>;
+
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [AppComponent],
@@ -21,14 +24,27 @@ describe('AppComponent', () => {
                 )
             ]
         }).compileComponents();
+        fixture = TestBed.createComponent(AppComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
     });
 
     it('should render title', () => {
-        const fixture = TestBed.createComponent(AppComponent);
-        fixture.detectChanges();
         const compiled = fixture.nativeElement as HTMLElement;
         expect(compiled.querySelector('span')?.textContent).toContain(
             'Kanban Fire'
         );
+    });
+
+    it('should login', () => {
+        component['loggedIn'] = false;
+        component['login'](true);
+        expect(component['loggedIn']).toBeTruthy();
+    });
+
+    it('should not login', () => {
+        component['loggedIn'] = false;
+        component['login'](false);
+        expect(component['loggedIn']).toBeFalsy();
     });
 });

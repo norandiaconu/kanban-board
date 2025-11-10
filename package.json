@@ -1,13 +1,13 @@
 {
     "name": "kanban-board",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT",
     "scripts": {
         "start": "ng serve",
         "build": "ng build",
         "test": "ng test",
         "e2e": "playwright test",
-        "preview": "ng build && vite preview --port 8080 --outDir ./docs/browser --open"
+        "preview": "ng build && vite preview --port 8080 --outDir ./docs/browser"
     },
     "private": true,
     "dependencies": {
@@ -32,6 +32,7 @@
         "@playwright/test": "^1.56.1",
         "@types/jasmine": "~5.1.0",
         "@types/node": "^24.9.1",
+        "@vitest/coverage-v8": "^3.2.4",
         "jsdom": "^27.0.1",
         "prettier": "^3.6.2",
         "typescript": "~5.9.3",
