@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1762814332956,
+  "timestamp": 1774915982304,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/favicon.ico",
         "/index.html",
-        "/main-5NQKEBFS.js",
+        "/main-EVDLPLVX.js",
         "/manifest.webmanifest",
         "/polyfills-5CFQRCPP.js",
         "/styles-PRPNPSJX.css"
@@ -37,8 +37,8 @@
   "hashTable": {
     "/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
     "/icons/icon-512x512.png": "1de182f76f7329dfa8f9fcdd1fdcdd695bea6a99",
-    "/index.html": "cc40b55185db06dcb7a9ea8540f23db4e204b005",
-    "/main-5NQKEBFS.js": "9736e7d620a8ae3928475bd897c2f3d45d5ed078",
+    "/index.html": "56e22f7321689b74b95f6b70ef427b3197085b9a",
+    "/main-EVDLPLVX.js": "5270e35dad28a45b2f33d68bc2b0f0baadb8497e",
     "/manifest.webmanifest": "f6a23de436021d038237391a07a90e97f503d306",
     "/polyfills-5CFQRCPP.js": "f2241e9a25858f895ce299d15f6f22e849e2fd72",
     "/styles-PRPNPSJX.css": "d870c813af8831b93f8458dbc8925bb788ca8a15"
