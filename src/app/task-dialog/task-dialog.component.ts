@@ -1,16 +1,16 @@
 import { Component, inject } from '@angular/core';
-import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
-import { Task } from '../task/task.component';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule, MatFabButton } from '@angular/material/button';
 import {
     MAT_DIALOG_DATA,
     MatDialogActions,
     MatDialogClose,
     MatDialogRef
 } from '@angular/material/dialog';
-import { FormsModule } from '@angular/forms';
-import { MatButtonModule, MatFabButton } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { Task } from '../task/task.component';
 
 export interface TaskDialogData {
     task: Partial<Task>;

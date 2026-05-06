@@ -1,14 +1,16 @@
 {
     "name": "kanban-board",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "license": "MIT",
     "scripts": {
         "start": "ng serve",
         "build": "ng build && vite preview --port 8080 --outDir ./docs/browser",
         "test": "ng test",
-        "e2e": "playwright test"
+        "e2e": "playwright test",
+        "lint": "eslint ."
     },
     "private": true,
+    "type": "module",
     "dependencies": {
         "@angular/common": "^21.2.6",
         "@angular/compiler": "^21.2.6",
@@ -28,11 +30,16 @@
         "@angular/cdk": "^21.0.0",
         "@angular/cli": "^21.2.5",
         "@angular/compiler-cli": "^21.2.6",
+        "@eslint/js": "~9.39.4",
         "@playwright/test": "^1.56.1",
         "@types/node": "^24.9.1",
+        "angular-eslint": "~21.3.1",
+        "eslint": "~9.39.4",
+        "eslint-plugin-import": "~2.32.0",
         "jsdom": "^28.1.0",
         "prettier": "^3.6.2",
         "typescript": "~5.9.3",
+        "typescript-eslint": "~8.59.2",
         "vitest": "^4.1.2"
     },
     "overrides": {

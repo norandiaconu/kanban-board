@@ -1,26 +1,14 @@
 import {
+    CdkDragDrop,
+    DragDropModule,
+    transferArrayItem
+} from '@angular/cdk/drag-drop';
+import {
     Component,
     inject,
     Injector,
     runInInjectionContext
 } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { Task, TaskComponent } from './task/task.component';
-import { MatCardModule } from '@angular/material/card';
-import {
-    CdkDragDrop,
-    DragDropModule,
-    transferArrayItem
-} from '@angular/cdk/drag-drop';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialog } from '@angular/material/dialog';
-import {
-    TaskDialogComponent,
-    TaskDialogResult
-} from './task-dialog/task-dialog.component';
-import { LoginComponent } from './login/login.component';
 import {
     addDoc,
     collection,
@@ -32,7 +20,19 @@ import {
     updateDoc,
     where
 } from '@angular/fire/firestore';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialog } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { RouterModule } from '@angular/router';
 import { Observable, take } from 'rxjs';
+import { LoginComponent } from './login/login.component';
+import { Task, TaskComponent } from './task/task.component';
+import {
+    TaskDialogComponent,
+    TaskDialogResult
+} from './task-dialog/task-dialog.component';
 
 @Component({
     imports: [

@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { LoginComponent } from './login.component';
-import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { describe, beforeEach, it, expect } from 'vitest';
+import { LoginComponent } from './login.component';
 
 describe('LoginComponent', () => {
     let component: LoginComponent;

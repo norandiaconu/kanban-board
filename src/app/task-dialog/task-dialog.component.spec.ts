@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TaskDialogComponent } from './task-dialog.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { describe, beforeEach, it, expect } from 'vitest';
+import { TaskDialogComponent } from './task-dialog.component';
 
 describe('TaskDialogComponent', () => {
     let component: TaskDialogComponent;

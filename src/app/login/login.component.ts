@@ -14,8 +14,8 @@ import {
 } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
-import { environment } from '../../environments/environment';
 import { filter } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Component({
     selector: 'app-login',

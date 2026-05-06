@@ -4,12 +4,12 @@ import {
     provideZoneChangeDetection,
     isDevMode
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { appRoutes } from './app.routes';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { provideRouter } from '@angular/router';
 import { provideServiceWorker } from '@angular/service-worker';
+import { appRoutes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
     providers: [
