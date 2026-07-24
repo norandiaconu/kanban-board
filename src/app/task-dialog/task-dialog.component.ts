@@ -39,8 +39,9 @@ export interface TaskDialogResult {
     styleUrl: './task-dialog.component.scss'
 })
 export class TaskDialogComponent {
-    protected data = inject<TaskDialogData>(MAT_DIALOG_DATA);
-    private dialogRef = inject<MatDialogRef<TaskDialogComponent>>(MatDialogRef);
+    protected readonly data = inject<TaskDialogData>(MAT_DIALOG_DATA);
+    private readonly dialogRef =
+        inject<MatDialogRef<TaskDialogComponent>>(MatDialogRef);
 
     private backupTask: Partial<Task> = { ...this.data.task };
 

@@ -1,7 +1,6 @@
 import {
     ApplicationConfig,
     provideBrowserGlobalErrorListeners,
-    provideZoneChangeDetection,
     isDevMode
 } from '@angular/core';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
@@ -14,7 +13,6 @@ import { appRoutes } from './app.routes';
 export const appConfig: ApplicationConfig = {
     providers: [
         provideBrowserGlobalErrorListeners(),
-        provideZoneChangeDetection({ eventCoalescing: true }),
         provideRouter(appRoutes),
         provideFirebaseApp(() =>
             initializeApp({

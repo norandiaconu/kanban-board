@@ -4,6 +4,7 @@ import {
     transferArrayItem
 } from '@angular/cdk/drag-drop';
 import {
+    ChangeDetectorRef,
     Component,
     inject,
     Injector,
@@ -53,6 +54,7 @@ export class AppComponent {
     private readonly dialog = inject(MatDialog);
     private readonly firestore = inject(Firestore);
     private readonly injector = inject(Injector);
+    private readonly cdRef = inject(ChangeDetectorRef);
 
     protected title = 'kanban-board';
     protected todo: Task[] = [
@@ -111,6 +113,7 @@ export class AppComponent {
                                                     item[0].id
                                                 )
                                             );
+                                            this.cdRef.markForCheck();
                                         } else {
                                             await updateDoc(
                                                 doc(
@@ -124,6 +127,7 @@ export class AppComponent {
                                                         task.description
                                                 }
                                             );
+                                            this.cdRef.markForCheck();
                                         }
                                     }
                                 );
@@ -135,6 +139,7 @@ export class AppComponent {
                     } else {
                         dataList[taskIndex] = task;
                     }
+                    this.cdRef.markForCheck();
                 }
             });
     }
@@ -180,6 +185,7 @@ export class AppComponent {
                                 )
                             );
                         });
+                        this.cdRef.markForCheck();
                     });
             });
         }
@@ -210,9 +216,11 @@ export class AppComponent {
                             collection(this.firestore, 'todo'),
                             result.task
                         );
+                        this.cdRef.markForCheck();
                     });
                 } else {
                     this.todo.push(result.task);
+                    this.cdRef.markForCheck();
                 }
             });
     }
@@ -236,7 +244,10 @@ export class AppComponent {
             this.doneObs = collectionData(
                 query(collection(this.firestore, 'done'))
             ) as Observable<Task[]>;
-            this.doneObs.subscribe((dones) => (this.done = dones));
+            this.doneObs.subscribe((dones) => {
+                this.done = dones;
+                this.cdRef.markForCheck();
+            });
         });
     }
 }
